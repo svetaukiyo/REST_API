@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,14 +47,19 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public List<Playlist> findAllByFollowerId(Long id) {
-        return playlistRepository.findAllByFollowerId(id);
+    public PagePlaylist findAllByFollowerId(Long id, Pageable pageable) {
+        PagePlaylist pagePlaylist = new PagePlaylist();
+        pagePlaylist.setPages(getPagesByFollower(pageable, id));
+        pagePlaylist.setPlaylists(playlistRepository.findAllByFollowerId(id, pageable)
+                .getContent()
+                .stream().map(playlist -> customConverter.convertToDto(playlist, PlaylistDto.class))
+                .collect(Collectors.toList()));
+        return pagePlaylist;
     }
-
     @Override
     public PagePlaylist findAllByArtistId(Long id, Pageable pageable) {
         PagePlaylist pagePlaylist = new PagePlaylist();
-        pagePlaylist.setPages(getPages(pageable, id));
+        pagePlaylist.setPages(getPagesByArtist(pageable, id));
         pagePlaylist.setPlaylists(playlistRepository.findAllByArtistId(id, pageable)
                 .getContent()
                 .stream().map(playlist -> customConverter.convertToDto(playlist, PlaylistDto.class))
@@ -67,8 +71,12 @@ public class PlaylistServiceImpl implements PlaylistService {
         return (int) Math.ceil((double) playlistRepository.count() / pageable.getPageSize());
     }
 
-    private int getPages(Pageable pageable, Long id) {
+    private int getPagesByArtist(Pageable pageable, Long id) {
         return (int) Math.ceil((double) playlistRepository.countByArtist_Id(id) / pageable.getPageSize());
+    }
+
+    private int getPagesByFollower(Pageable pageable, Long id) {
+        return (int) Math.ceil((double) playlistRepository.countByFollower_Id(id) / pageable.getPageSize());
     }
 
     @Override

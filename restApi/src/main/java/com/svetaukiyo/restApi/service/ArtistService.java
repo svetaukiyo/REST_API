@@ -1,12 +1,12 @@
 package com.svetaukiyo.restApi.service;
 
 import com.svetaukiyo.restApi.model.Artist;
-
-import java.util.List;
+import com.svetaukiyo.restApi.model.PageArtist;
+import org.springframework.data.domain.Pageable;
 
 public interface ArtistService {
 
-    List<Artist> getAll();
+    PageArtist getAll(Pageable pageable);
 
     Artist update(Artist artist);
 }
