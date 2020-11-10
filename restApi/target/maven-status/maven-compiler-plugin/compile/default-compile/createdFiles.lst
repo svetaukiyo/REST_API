@@ -42,6 +42,7 @@ com\svetaukiyo\restApi\model\LoginViewModel.class
 com\svetaukiyo\restApi\model\Playlist$PlaylistBuilder.class
 com\svetaukiyo\restApi\dto\AccountDto.class
 com\svetaukiyo\restApi\dto\SongDto.class
+com\svetaukiyo\restApi\model\PageFollower.class
 com\svetaukiyo\restApi\model\Follower.class
 com\svetaukiyo\restApi\repository\AccountRepository.class
 com\svetaukiyo\restApi\model\Account.class
@@ -50,5 +51,6 @@ com\svetaukiyo\restApi\model\Artist$ArtistBuilder.class
 com\svetaukiyo\restApi\security\JwtProperties.class
 com\svetaukiyo\restApi\dto\PlaylistAddDto.class
 com\svetaukiyo\restApi\model\Song$SongBuilder.class
+com\svetaukiyo\restApi\model\PageArtist.class
 com\svetaukiyo\restApi\dto\ArtistDto.class
 com\svetaukiyo\restApi\exception\DeleteException.class
